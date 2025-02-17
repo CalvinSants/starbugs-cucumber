@@ -1,37 +1,63 @@
-# README - Estrutura do Código Ruby com Cucumber
+# Projeto de Testes Automatizados com Cucumber e Ruby
 
-Este README descreve a estrutura do código Ruby para testes de aceitação utilizando Cucumber, organizado em pastas `feature`, `support` e arquivos de configuração.
+Este projeto utiliza **Cucumber** com **Ruby** para a automação de testes.
 
-## Estrutura do Projeto
+## 📂 Estrutura do Projeto
 
+A estrutura do projeto segue o padrão do Cucumber:
+
+```
 ├── feature/
-│   └── step_definitions/
-│       └── steps.rb
-└── support/
-└── env.rb
+│   ├── step_definitions/
+│   │   └── steps.rb
+│   ├── support/
+│   │   └── env.rb
 ├── cucumber.yml
 ├── Gemfile
-└── Gemfile.lock
-## feature/step_definitions/steps.rb
+├── Gemfile.lock
+```
 
-Este arquivo contém as definições dos passos (steps) que descrevem o comportamento do sistema em termos de cenários (scenarios) Cucumber. Cada passo corresponde a uma ação ou verificação a ser realizada durante o teste.
+### 📁 feature/
+Contém os arquivos relacionados aos testes do Cucumber.
 
-**Exemplo:**
+#### 📂 step_definitions/
+Aqui ficam os **passos** dos testes.
+- `steps.rb`: Define as implementações dos steps escritos nos arquivos de feature.
 
-```ruby
-Dado('que o usuário está na página de login') do
-  visit '/login'
-end
+#### 📂 support/
+Arquivos de suporte do Cucumber.
+- `env.rb`: Configurações globais do ambiente de testes.
 
-Quando('o usuário digita suas credenciais') do
-  fill_in 'username', with: 'usuario'
-  fill_in 'password', with: 'senha'
-end
+### 📄 cucumber.yml
+Define perfis de execução para o Cucumber, permitindo configurações diferentes para diferentes ambientes de teste.
 
-E('o usuário clica no botão "Entrar"') do
-  click_button 'Entrar'
-end
+### 📄 Gemfile
+Lista as dependências do projeto, incluindo:
+- **cucumber**: Framework principal para BDD.
+- **rspec**: Suporte a matchers e assertions.
+- **capybara** (se aplicável): Para testes em aplicações web.
 
-Então('o usuário deve ser redirecionado para a página principal') do
-  expect(page).to have_content 'Bem-vindo'
-end ```
+### 📄 Gemfile.lock
+Arquivo gerado automaticamente com as versões exatas das dependências instaladas.
+
+## 🚀 Como executar os testes
+
+1. Instale as dependências do projeto:
+   ```sh
+   bundle install
+   ```
+2. Execute os testes com Cucumber:
+   ```sh
+   cucumber
+   ```
+   Ou usando um perfil específico definido em `cucumber.yml`:
+   ```sh
+   cucumber -p perfil_nome
+   ```
+
+## 📌 Considerações finais
+Este projeto segue as boas práticas de automação de testes com Cucumber e Ruby. Para contribuições ou dúvidas, sinta-se à vontade para abrir uma issue ou pull request.
+
+---
+  ✍️ **Autor:** [Calvin]
+

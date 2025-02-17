@@ -48,7 +48,7 @@ Arquivo gerado automaticamente com as versões exatas das dependências instalad
    ```
 2. Execute os testes com Cucumber:
    ```sh
-   cucumber
+   exec cucumber
    ```
    Ou usando um perfil específico definido em `cucumber.yml`:
    ```sh

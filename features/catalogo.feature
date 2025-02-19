@@ -10,17 +10,19 @@ Scenario:  acessar catalogo de cafes na página principal
 Scenario: Iniciar a compra de um cafe
 
     Given que estou na pagina principal da starbugs
-    And que desejo comprar o cafe "Expresso Gelado"
-    And que esse produto custa "R$ 9,99"
-    And que o custo de entrega e de "R$ 10,00"
+    And que desejo comprar o seguinte produto:
+    | name  | Expresso Gelado |
+    | price    | R$ 9,99         |
+    | delivery | R$ 10,00        |
     When inicio a compra desse item
     Then devo ver a pagina de checkout com os detalhes do produto
     And o valor total da compra deve ser de "R$ 19,99"
-
+@temp
 Scenario: Cafe indisponivel
 
     Given que estou na pagina principal da starbugs
-    And que desejo comprar o cafe "Expresso Cremoso"
+    And que desejo comprar o seguinte produto:
+    | name  | Expresso Cremoso |
     When inicio a compra desse item
     Then devo ver um popup informando que o produto esta indisponivel
 

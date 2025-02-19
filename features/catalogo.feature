@@ -10,16 +10,28 @@ Scenario:  acessar catalogo de cafes na página principal
 Scenario: iniciar a compra de um café
 
     Given que estou na página principal da Starbugs
-        And que desejo comprar o café "Expresso Gelado"
-        And que esse produto custa "R$ 9,99"
-        And que o custo de entrega é de "R$ 10,00"
+
+        And que desejo comprar o seguinte produto:
+
+        # quando se trata somente de uma informação, como a referida abaixo, não há necessidade
+        # de utilizar a table.hashes - pode ser feito com: puts table.rows.hash na seguinte composição
+
+        | name     | Expresso Gelado |
+        | price    | R$ 9,99         |
+        | delivery | R$ 10,00        |
+
+        # Quando vou precisar acessar diversas informações em um Scenario Outline
+        # | product         | price   | delivery |
+        # | Expresso Gelado | R$ 9,99 | R$ 10,00 |
+
     When inicio a compra desse item
     Then devo ver a pagina de checkout com os detalhes do produto
         And o valor total da compra deve ser de "R$ 19,99"
-        
+ 
 Scenario: cafe indisponivel
 
     Given que estou na página principal da Starbugs
-        And que desejo comprar o café "Expresso Cremoso"
+        And que desejo comprar o seguinte produto:
+        | name     | Expresso Cremoso |
     When inicio a compra desse item
     Then devo ver um popup informando que o produto esta indisponivel

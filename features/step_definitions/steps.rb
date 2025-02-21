@@ -1,16 +1,21 @@
 When('acesso a página principal da starbugs') do
-    visit 'https://starbugs-qa.vercel.app/'
+    @home.open
 end
   
+# Then('eu devo ver uma lista de cafes disponíveis') do
+#     products = all('.coffee-item')
+#     expect(products.size).to be > 0
+
+# após a criação do home, vamos melhorar o código. Note o "home"
+
 Then('eu devo ver uma lista de cafes disponíveis') do
-    products = all('.coffee-item')
-    expect(products.size).to be > 0
+    expect(@home.coffees_list.size).to be > 0
 end
 
  
 
 Given('que estou na página principal da Starbugs') do
-    visit 'https://starbugs-qa.vercel.app/'
+    @home.open
 end
 
 Given('que desejo comprar o seguinte produto:') do |table|
@@ -34,30 +39,49 @@ Given('que desejo comprar o seguinte produto:') do |table|
 
   end
 
-When('inicio a compra desse item') do
-    product = find('.coffee-item', text: @product[:name])
-    product.find('.buy-coffee').click
+# When('inicio a compra desse item') do
+#     product = find('.coffee-item', text: @product[:name])
+#     product.find('.buy-coffee').click
+
+# note que o ato do "click" já não está mais aqui, afinal, o step completo está em home.rb
+
+    When('inicio a compra desse item') do
+        @home.buy(@product[:name])
 end
 
-Then('devo ver a pagina de checkout com os detalhes do produto') do
-    product_title = find('.item-details h1')
-    expect(product_title.text).to eql @product[:name]
+# A partir do item a seguir não estaremos mais na "home page" do site e sim, na página de checkout
+# Por isso que vamos ter de, na pasta PAGES criar um novo File para a página de checkout
+# Lembre-se: Pages é um método de divisão por páginas, que facilita a utilização dos comandos
 
-    sub_price = find('.subtotal .sub-price')
-    expect(sub_price.text).to eql @product[:price]
+# Then('devo ver a pagina de checkout com os detalhes do produto') do
+#     product_title = find('.item-details h1')
+#     expect(product_title.text).to eql @product[:name]
 
-    delivery_sub_price = find('.delivery .delivery-price')
-    expect(delivery_sub_price.text).to eql @product[:delivery]
+#     sub_price = find('.subtotal .sub-price')
+#     expect(sub_price.text).to eql @product[:price]
+
+#     delivery_sub_price = find('.delivery .delivery-price')
+#     expect(delivery_sub_price.text).to eql @product[:delivery]
+
+    Then('devo ver a pagina de checkout com os detalhes do produto') do
+        @checkout.check_product_details(@product)
 end
+
+# Then('o valor total da compra deve ser de {string}') do |total|
+#     total_price = find('.total .total-price')
+#     expect(total_price.text). to eql total
 
 Then('o valor total da compra deve ser de {string}') do |total|
-    total_price = find('.total .total-price')
-    expect(total_price.text). to eql total
+    @checkout.check_total_price(total)
+
 end
 
 # Indisponivel
 
+# Then('devo ver um popup informando que o produto esta indisponivel') do
+#     popup = find('.swal2-html-container')
+#     expect(popup.text).to eql 'Produto indisponível'
+
 Then('devo ver um popup informando que o produto esta indisponivel') do
-    popup = find('.swal2-html-container')
-    expect(popup.text).to eql 'Produto indisponível'
+    @popup.have_text('Produto indisponível')
 end
